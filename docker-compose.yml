@@ -1,0 +1,18 @@
+services:
+    portainer:
+        container_name: portainer
+        image: portainer/portainer-ce:${VERSION}
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - portainer_data:/data
+        
+       
+volumes:
+    portainer_data:
+
+networks:
+    portainer:
+        external: true
+    cloudflare:
+        external: true
