@@ -6,6 +6,10 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
             - portainer_data:/data
+            - /etc/cloudflare/origin-server-certificates/edouardq.fr:/etc/ssl/certs
+        environment:
+            SSL_CERT: "/etc/ssl/certs/cert.pem"
+            SSL_KEY: "/etc/ssl/certs/privkey.pem"
         networks:
             - cloudflare
 
