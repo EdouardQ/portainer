@@ -4,7 +4,6 @@ services:
         image: portainer/portainer-ce:${VERSION}
         restart: unless-stopped
         volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
             - portainer_data:/data
             - /etc/cloudflare/origin-server-certificates/edouardq.fr/cert.pem:/certs/portainer.crt
             - /etc/cloudflare/origin-server-certificates/edouardq.fr/privkey.pem:/certs/portainer.key
@@ -13,11 +12,26 @@ services:
             --tlscert /certs/portainer.crt
             --tlskey /certs/portainer.key
         networks:
+            - portainer
             - cloudflare
+
+
+    portainer-agent:
+        container_name: portainer_agent
+        image: portainer/agent:${VERSION}
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /var/lib/docker/volumes:/var/lib/docker/volumes
+            - /home/debian/lib/containers:/var/lib/portainer/git
+        networks:
+            - portainer
 
 volumes:
     portainer_data:
 
 networks:
+    portainer:
+        external: true
     cloudflare:
         external: true
