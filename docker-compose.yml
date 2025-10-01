@@ -9,13 +9,12 @@ services:
             - /etc/cloudflare/origin-server-certificates/edouardq.fr/cert.pem:/certs/portainer.crt
             - /etc/cloudflare/origin-server-certificates/edouardq.fr/privkey.pem:/certs/portainer.key
         command: >
-            --sslcert /certs/portainer.crt
-            --sslkey /certs/portainer.key
+            --tlsverify
+            --tlscert /certs/portainer.crt
+            --tlskey /certs/portainer.key
         networks:
             - cloudflare
 
-        
-       
 volumes:
     portainer_data:
 
